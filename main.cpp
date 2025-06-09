@@ -1,6 +1,7 @@
 #include "Process/ProcessManager.h"
 #include "Process/Process.h"
 #include "File/FileSys.h"
+#include "Page/PageMng.h"
 #include <iostream>
 
 using namespace std;
@@ -9,7 +10,8 @@ int main() {
     while(1){
         cout <<"Type which system you want:"<<endl;
         cout <<"1. File System"<<endl;
-        cout <<"2. Process System"<<endl;
+        cout <<"2. Process System(using page manager)"<<endl;
+        cout <<"3. Paging Memory Manager"<<endl;
         cout <<"0. Exit"<<endl;
         int choice;
         cin >> choice;
@@ -20,6 +22,8 @@ int main() {
             break; // 退出循环，进入进程系统
         } else if (choice == 0) {
             return 0; // 退出程序
+        } else if (choice ==1){
+            runPageManagerDemo(); // 调用分页内存管理演示
         } else {
             cout << "Invalid choice, please try again." << endl;
         }

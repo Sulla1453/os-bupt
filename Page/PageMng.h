@@ -57,6 +57,6 @@ public:
 };
 
 // 测试函数声明
-void runDemo();
+void runPageManagerDemo();
 
 #endif // PAGEMNG_H

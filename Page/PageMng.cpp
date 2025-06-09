@@ -234,7 +234,7 @@ public:
 };
 
 // 测试函数
-void runDemo() {
+void runPageManagerDemo(){
     std::cout << "=== 分页式存储管理系统演示 ===" << std::endl;
     
     // 创建管理器：16个页框，每个4KB
@@ -274,6 +274,6 @@ void runDemo() {
 }
 
 int main() {
-    runDemo();
+    runPageManagerDemo();
     return 0;
 }
