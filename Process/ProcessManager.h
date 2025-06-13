@@ -2,7 +2,7 @@
 #define PROCESSMANAGER_H
 
 #include "Process.h"
-#include "ResourceManager.h"
+#include "ResourceMng/ResourceManager.h"
 #include <map>
 #include "Page/PageMng.h" 
 #include <string>
@@ -34,6 +34,9 @@ public:
     void runScheduler(int method);
     void interactiveScheduler(int method);
     bool hasNewProcesses();
+    void suspendProcess(Process* proc);   // 进程挂起
+    void activateProcess(Process* proc);  // 进程激活
+    void handleTimeSlice();
     
     // 队列管理
     void addToBlockedQueue(Process* proc);
@@ -46,7 +49,7 @@ public:
     // 资源管理
     void releaseProcessResources(Process* proc);
     
-    // 显示和状态
+    // 显示
     void showAll();
     void showSystemStatus();
     void showDetailedProcessInfo();

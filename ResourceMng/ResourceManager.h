@@ -1,8 +1,9 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
-#include "Process.h"
+#include "Process/Process.h"
 #include <map>
+#include "Page/PageMng.h"
 #include <string>
 #include <vector>
 
@@ -18,9 +19,10 @@ private:
     
     map<string, Resource*> resources;
     map<string, vector<string>> processResources; // 进程占用的资源
+    PagingMemoryManager* pagingManager; // 分页内存管理器
 
 public:
-    ResourceManager();
+    ResourceManager(PagingMemoryManager* pm);
     ~ResourceManager();
     
     void initializeResources();
@@ -29,7 +31,8 @@ public:
     
     bool allocateResource(Process* process, const string& resourceName, int amount = 1);
     void freeResource(Process* process, const string& resourceName, int amount = 1);
-    
+    bool handleMemoryShortage(Process* process);
+    void addToWaitingQueue(Process* process, const string& resourceName);
     void showResourceStatus();
 };
 

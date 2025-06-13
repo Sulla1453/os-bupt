@@ -1,12 +1,15 @@
 #include "ProcessManager.h"
+#include "Semaphore.h"
+#include "InterputMng/InterputMng.h"
 #include <iostream>
 #include <iomanip>
 using namespace std;
 
+
 ProcessManager::ProcessManager() : readyHead(nullptr), blockedHead(nullptr), 
                                    runningHead(nullptr), currentTime(0) {
-    resourceManager = new ResourceManager();
     pagingManager = new PagingMemoryManager(256, 4); // 假设有256个页框，每个4KB=>1G
+    resourceManager = new ResourceManager(pagingManager);
 }
 
 ProcessManager::~ProcessManager() {
@@ -41,7 +44,7 @@ Process* ProcessManager::createProcess(int space, string pid, int runtime, int a
     // 调用分页管理器进行内存分配
     if (!pagingManager->allocateMemory(atoi(pid.c_str()), space)) {
         cout << "Memory allocation failed for process " << pid << endl;
-        // 根据需要可以删除进程并返回 nullptr
+        // 这里可以需要中断
     }
     
     // 只有在到达时间小于等于当前时间时才加入ready队列
@@ -116,6 +119,13 @@ void ProcessManager::moveToReadyQueue(Process* proc) {
     proc->next = readyHead;
     readyHead = proc;
     proc->set_state("ready");
+}
+void ProcessManager::handleTimeSlice() {
+    if (runningHead) {
+        // Running → Ready (时间片到期)
+        moveToReadyQueue(runningHead);
+        runningHead = nullptr;
+    }
 }
 void ProcessManager::checkArrivingProcesses() {
     // 检查是否有进程在当前时间到达
@@ -394,8 +404,8 @@ void ProcessManager::terminateProcess(Process* proc) {
     proc->set_state("terminated");
     allProcs.erase(proc->get_pid());
 
-    // 释放分页管理器的资源
-    pagingManager->deallocateMemory(atoi(proc->get_pid().c_str()));
+    // // 释放分页管理器的资源
+    // pagingManager->deallocateMemory(atoi(proc->get_pid().c_str()));
     
     // 从运行队列中移除
     Process* prev = nullptr;

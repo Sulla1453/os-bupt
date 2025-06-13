@@ -1,4 +1,5 @@
 #include "Semaphore.h"
+#include "Process/Process.h"
 #include <iostream>
 
 Semaphore::Semaphore(int initial_value, std::string sem_name) 
