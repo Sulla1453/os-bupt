@@ -41,7 +41,9 @@ Process* ProcessManager::createProcess(int space, string pid, int runtime, int a
     // 调用分页管理器进行内存分配
     if (!pagingManager->allocateMemory(atoi(pid.c_str()), space)) {
         cout << "Memory allocation failed for process " << pid << endl;
-        // 根据需要可以删除进程并返回 nullptr
+        allProcs.erase(pid);
+        delete proc;
+        return nullptr;
     }
     
     // 只有在到达时间小于等于当前时间时才加入ready队列

@@ -27,11 +27,11 @@ bool ResourceManager::requestResources(Process* process) {
     requiredResources.push_back("CPU");
     requiredAmounts.push_back(1);
     
-    // 根据内存需求
-    if (process->get_space() > 0) {
-        requiredResources.push_back("Memory");
-        requiredAmounts.push_back(process->get_space());
-    }
+    // // 根据内存需求
+    // if (process->get_space() > 0) {
+    //     requiredResources.push_back("Memory");
+    //     requiredAmounts.push_back(process->get_space());
+    // }
     
     // 根据属性决定其他资源
     if (process->get_attribute() == 1) {

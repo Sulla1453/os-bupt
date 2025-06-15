@@ -1,0 +1,3 @@
+E:/3thsecond/OperationSystem/os-simulator/build/CMakeFiles/os_sim.dir
+E:/3thsecond/OperationSystem/os-simulator/build/CMakeFiles/ALL_BUILD.dir
+E:/3thsecond/OperationSystem/os-simulator/build/CMakeFiles/ZERO_CHECK.dir
